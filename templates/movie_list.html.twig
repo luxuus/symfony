@@ -1,0 +1,22 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Le meilleur du cinéma{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+<div>
+{{ render(controller('App\\Controller\\NavBarController::index')) }}
+
+<h1>{% block page_title %}Films{% endblock %}</h1>
+{% block content %}
+    <div class="ctn_movie"
+    {% for id, movie in movies %}
+        <a href="{{ path('movie', {'id': movie.id}) }}">{{ movie.titre }}</a>
+    {% endfor %}
+    </div>
+{% endblock %}
+</body>
+</html>

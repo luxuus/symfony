@@ -1,0 +1,8 @@
+
+{% block navbar %}
+    <nav>
+        <a href="{{ path('movie', {'id':'movie.id'}) }}">Home</a>
+        <a href="{{ path('categories') }}">Categories</a>
+        <a href="{{ path('rechercher') }}">Rechercher</a>
+    </nav>
+{% endblock %}

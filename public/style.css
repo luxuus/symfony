@@ -1,0 +1,44 @@
+*, ::before, ::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #ffffff;
+}
+
+nav {
+    height: 60px;
+    background: #e7e7e7;
+    display: flex;
+    font-size: 1.5rem;
+    gap: 20px;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+h1 {
+    font-size: 1.2rem;
+}
+
+.ctn_movie {
+    display: flex;
+    gap: 30px;
+    margin: 50px;
+
+}
+
+.movie {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    height: 300px;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    gap: 30px;
+    border: 1px solid black;
+    padding: 15px;
+
+}

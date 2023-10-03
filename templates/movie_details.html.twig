@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+{{ render(controller('App\\Controller\\NavBarController::index')) }}
+<h1>{% block page_title %}Films{% endblock %}</h1>
+
+<div class="movie">
+    <h1>{{ movie.titre }}</h1>
+    <p>{{ movie.categories }}</p>
+    <p>{{ movie.date }}</p>
+</div>
