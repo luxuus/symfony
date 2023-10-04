@@ -2,64 +2,80 @@
 
 namespace App\Controller;
 
+use App\Entity\Movie;
+use App\Form\MovieType;
+use App\Repository\MovieRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function PHPUnit\Framework\throwException;
 
+#[Route('/movie')]
 class MovieController extends AbstractController
 {
-
-    const  movies = [
-        [
-            'id'=>'1',
-            'titre' => 'OPPENHEIMER',
-            'categories'=>'Biopic, Historique, Thriller',
-            'date'=>'19 juillet 2023'],
-        [
-            'id'=>'2',
-            'titre' => 'OPPENHEIMER',
-            'categories'=>'Biopic, Historique, Thriller',
-            'date'=>'19 juillet 2023'],
-        [
-            'id'=>'3',
-            'titre' => 'OPPENHEIMER',
-            'categories'=>'Biopic, Historique, Thriller',
-            'date'=>'19 juillet 2023']
-    ];
-
-
-    #[Route('/movie/{id}', name: 'movie')]
-    public function index(int $id): Response
+    #[Route('/', name: 'app_movie_index', methods: ['GET'])]
+    public function index(MovieRepository $movieRepository): Response
     {
-        if(!isset(self::movies[$id])) {
-            throw $this->createNotFoundException();
+        return $this->render('movie/index.html.twig', [
+            'movies' => $movieRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/new', name: 'app_movie_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $movie = new Movie();
+        $form = $this->createForm(MovieType::class, $movie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($movie);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_movie_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('movie_details.html.twig', [
-            'id' => $id,
-            'movie' => self::movies[$id],
+        return $this->render('movie/new.html.twig', [
+            'movie' => $movie,
+            'form' => $form,
         ]);
     }
 
-    #[Route('/movies', name: 'movies')]
-    public function showAll(): Response
+    #[Route('/{id}', name: 'app_movie_show', methods: ['GET'])]
+    public function show(Movie $movie): Response
     {
-
-        return $this->render('movie_list.html.twig', [
-            'movies' => self::movies,
+        return $this->render('movie/show.html.twig', [
+            'movie' => $movie,
         ]);
     }
 
-    #[Route('/categories', name: 'categories')]
-    public function categories(): Response
+    #[Route('/{id}/edit', name: 'app_movie_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Movie $movie, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('movie_categories.html.twig');
+        $form = $this->createForm(MovieType::class, $movie);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_movie_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('movie/edit.html.twig', [
+            'movie' => $movie,
+            'form' => $form,
+        ]);
     }
 
-    #[Route('/rechercher', name: 'rechercher')]
-    public function rechercher(): Response
+    #[Route('/{id}', name: 'app_movie_delete', methods: ['POST'])]
+    public function delete(Request $request, Movie $movie, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('movie_rechercher.html.twig');
+        if ($this->isCsrfTokenValid('delete'.$movie->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($movie);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_movie_index', [], Response::HTTP_SEE_OTHER);
     }
 }

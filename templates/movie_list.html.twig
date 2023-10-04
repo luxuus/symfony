@@ -1,22 +1,34 @@
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Le meilleur du cinéma{% endblock %}</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-    <link rel="stylesheet" href="/style.css">
 
-</head>
-<body>
-<div>
-{{ render(controller('App\\Controller\\NavBarController::index')) }}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Le meilleur du cinéma{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
-<h1>{% block page_title %}Films{% endblock %}</h1>
-{% block content %}
-    <div class="ctn_movie"
-    {% for id, movie in movies %}
-        <a href="{{ path('movie', {'id': movie.id}) }}">{{ movie.titre }}</a>
-    {% endfor %}
-    </div>
-{% endblock %}
-</body>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+
+    </head>
+
+    <body>
+    {{ render(controller('App\\Controller\\NavBarController::index')) }}
+
+        <div class="container-fluid">
+        <h3 class="card-title">{% block page_title %}Films à la une{% endblock %}</h3>
+        {% block content %}
+            <ul class="list-group">
+            {% for id, movie in movies %}
+                <li class="list-group-item">
+                    <a href="{{ path('movie', {'id': movie.id}) }}">{{ movie.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endblock %}
+        </div>
+    </body>
 </html>
