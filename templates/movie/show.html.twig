@@ -4,10 +4,11 @@
 
 {% block body %}
     <h2>Movie</h2>
+
     <div class="card" style="width: 80%;">
         <img src="{{ movie.poster }}" alt="Card image cap" width="100"/>
         <div class="card-body">
-            <h5>{{ movie.title }}</h5>
+            <h5>{{ movie.title}}</h5>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">{{ movie.country }}</li>
                 <li class="list-group-item">{{ movie.releasedAt ? movie.releasedAt|date('d-m-Y') : '' }}</li>

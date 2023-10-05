@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Entity\Movie;
 use App\Form\MovieType;
 use App\Repository\MovieRepository;
+use App\Service\OmdbApiConsumer;
+use App\Service\Transformer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\VarDumper\Caster\TraceStub;
 
 #[Route('/movie')]
 class MovieController extends AbstractController
@@ -78,4 +81,20 @@ class MovieController extends AbstractController
 
         return $this->redirectToRoute('app_movie_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/title/{title}', name: 'app_movie_api', methods: ['GET'])]
+    public function getMovie(string $title,OmdbApiConsumer $omdbApiConsumer): Response
+    {
+        return $this->render('movie/showapi.html.twig', [
+            'movie' => $omdbApiConsumer->getByTitle($title),
+        ]);
+    }
+
+    #[Route('/import/{title}',name: 'app_movie_import', methods: ['GET'] )]
+    public function import(Transformer $transformer, string $title)
+    {
+        $transformer->persist($title);
+        return $this->redirectToRoute('app_movie_index', [], Response::HTTP_SEE_OTHER);
+    }
+
 }

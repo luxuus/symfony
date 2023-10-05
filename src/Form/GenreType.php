@@ -16,10 +16,7 @@ class GenreType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('genre', EntityType::class, [
-                'class' => Genre::class,
-                'choice_label' => 'name'
-            ])
+
         ;
     }
 

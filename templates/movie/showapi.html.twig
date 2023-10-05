@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Movie{% endblock %}
+
+{% block body %}
+    <div class="card>">
+        <div class="card-header">
+            Détails du film
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ movie.Title }}</h5>
+            <p class="card-text">{{ movie.Year }}</p>
+            <p class="card-text">{{ movie.Rated }}</p>
+            <p class="card-text">{{ movie.Released }}</p>
+            <p class="card-text">{{ movie.Runtime }}</p>
+            <p class="card-text">{{ movie.Genre }}</p>
+            <p class="card-text">{{ movie.Director }}</p>
+            <p class="card-text">{{ movie.Writer }}</p>
+            <p class="card-text">{{ movie.Actors }}</p>
+            <p class="card-text">{{ movie.Plot }}</p>
+            <p class="card-text">{{ movie.Language }}</p>
+            <p class="card-text">{{ movie.Awards }}</p>
+            <p class="card-text">{{ movie.Poster }}</p>
+            <p class="card-text">{{ movie.Ratings }}</p>
+            <p class="card-text">{{ movie.Metascore }}</p>
+            <p class="card-text">{{ movie.imdbRating }}</p>
+            <p class="card-text">{{ movie.imdbVotes }}</p>
+            <p class="card-text">{{ movie.imdbID }}</p>
+            <p class="card-text">{{ movie.Type }}</p>
+            <p class="card-text">{{ movie.DVD }}</p>
+            <p class="card-text">{{ movie.Production }}</p>
+            <p class="card-text">{{ movie.Website }}</p>
+            <p class="card-text">{{ movie.Response }}</p>
+        </div>
+
+    </div>
+
+    <a class="btn btn-primary" href="{{ path('app_movie_index') }}">Retour</a>
+    <a class="btn btn-primary" href="{{ path('app_movie_edit', {'id': movie.id}) }}">Modifier</a>
+
+    {{ include('movie/_delete_form.html.twig') }}
+{% endblock %}

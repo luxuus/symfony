@@ -25,21 +25,31 @@ class Movie
     #[ORM\Column(length: 255)]
     private ?string $poster = null;
 
+    #[Assert\Country]
+    #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
     private ?string $country = null;
 
+
+    #[Assert\NotBlank]
     #[ORM\Column]
     private ?\DateTimeImmutable $releasedAt = null;
 
+    #[Assert\NotBlank]
     #[Assert\Length(
         min: 10,
         max: 255,
-        minMessage: 'Trop court',
-        maxMessage: 'Trop long'
+        minMessage: 'Le synopsis doit être d\'au moins 10 caractères',
+        maxMessage: 'Le synopsis ne doit pas d\'être de plus de 255 caractères'
     )]
     #[ORM\Column(length: 255)]
     private ?string $plot = null;
 
+    #[Assert\GreaterThan(
+        value: 10,
+        message: 'Le prix du billet ne peut pas être inférieur à 10€.'
+    )]
+    #[Assert\NotBlank]
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
 
