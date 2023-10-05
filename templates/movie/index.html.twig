@@ -13,15 +13,15 @@
                 <img class="card-img-top" src="{{ movie.poster }}" alt="Card image cap" width="200">
                 <h4 class="card-title mt-2">{{ movie.title }}</h4>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{ movie.country }}</li>
-                    <li class="list-group-item">{{ movie.releasedAt ? movie.releasedAt|date('d-m-Y') : '' }}</li>
-                    <li class="list-group-item">
+                    <li class="list-group-item">{{ movie.releasedAt ? movie.releasedAt|format_datetime('short', 'none', locale='fr') }}</li>
+                    <li class="list-group-item" style="height: 4rem">
+                        <span class="badge bg-danger">{{ movie.rated }}</span>
                         {% for genre in movie.genre %}
                             <span class="badge bg-secondary">{{ genre.name }}</span>
                         {% endfor %}
                     </li>
                     <li style="height:250px;" class="list-group-item ">{{ movie.plot }}</li>
-                    <li class="list-group-item">Prix : {{ movie.price }}€</li>
+                    <li class="list-group-item" style="height: 4rem">{{ movie.country }}</li>
                 </ul>
 
                 <ul class="list-group list-group-flush">

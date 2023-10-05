@@ -53,7 +53,7 @@ class Movie
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
 
-    #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'genre')]
+    #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'genre', cascade: ['persist'])]
     private Collection $genre;
 
     #[ORM\Column(length: 10, nullable: true)]

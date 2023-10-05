@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Service;
+use App\Entity\Genre;
 use App\Entity\Movie;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,6 +27,12 @@ class Transformer
         $movie->setPoster($content['Poster']);
         $movie->setPlot($content['Plot']);
         $movie->setRated($content['Rated']);
+        $genres = explode(', ',$content['Genre']);
+        foreach ($genres as $genre){
+            $obj = new Genre();
+            $obj->setName($genre);
+            $movie->addGenre($obj);
+        }
 
         $this->entityManager->persist($movie);
         $this->entityManager->flush();
