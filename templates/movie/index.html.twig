@@ -3,10 +3,10 @@
 {% block title %}Movie index{% endblock %}
 
 {% block body %}
-
         <h1>Films à l'affiche</h1>
         <a class="btn btn-primary" href="{{ path('app_movie_new') }}">Ajouter un film</a>
-        <div class="container-fluid d-flex gap-4 justify-content-center flex-wrap" style="max-width: 1600px">
+
+    <div class="container-fluid d-flex gap-4 justify-content-center flex-wrap" style="max-width: 1600px" >
         {% for movie in movies %}
         <div class="card" style="width: 18rem;">
             <div class="card-body">
@@ -38,6 +38,5 @@
                 no records found
             </div>
         {% endfor %}
-        </div>
 
 {% endblock %}

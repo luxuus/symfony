@@ -25,6 +25,7 @@ class Transformer
         $movie->setCountry($content['Country']);
         $movie->setPoster($content['Poster']);
         $movie->setPlot($content['Plot']);
+        $movie->setRated($content['Rated']);
 
         $this->entityManager->persist($movie);
         $this->entityManager->flush();

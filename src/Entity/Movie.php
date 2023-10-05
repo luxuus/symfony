@@ -56,6 +56,9 @@ class Movie
     #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'genre')]
     private Collection $genre;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $rated = null;
+
     public function __construct()
     {
         $this->genre = new ArrayCollection();
@@ -162,4 +165,17 @@ class Movie
 
         return $this;
     }
+
+    public function getRated(): ?string
+    {
+        return $this->rated;
+    }
+
+    public function setRated(?string $rated): static
+    {
+        $this->rated = $rated;
+
+        return $this;
+    }
+
 }

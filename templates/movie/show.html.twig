@@ -3,26 +3,28 @@
 {% block title %}Movie{% endblock %}
 
 {% block body %}
-    <h2>Movie</h2>
+    <div class="container-fluid justify-content-center">
+        <h2>Movie</h2>
 
-    <div class="card" style="width: 80%;">
-        <img src="{{ movie.poster }}" alt="Card image cap" width="100"/>
-        <div class="card-body">
-            <h5>{{ movie.title}}</h5>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">{{ movie.country }}</li>
-                <li class="list-group-item">{{ movie.releasedAt ? movie.releasedAt|date('d-m-Y') : '' }}</li>
-                <li class="list-group-item">{{ movie.plot }}</li>
-                <li class="list-group-item">{{ movie.price }}</li>
-            </ul>
+        <div class="card" style="width: 80%;">
+            <img src="{{ movie.poster }}" alt="Card image cap" width="100"/>
+            <div class="card-body">
+                <h5>{{ movie.title}}</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ movie.country }}</li>
+                    <li class="list-group-item">{{ movie.releasedAt ? movie.releasedAt|date('d-m-Y') : '' }}</li>
+                    <li class="list-group-item">{{ movie.plot }}</li>
+                    <li class="list-group-item">{{ movie.price }}</li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="d-flex gap-2">
-    <a class="btn btn-primary" href="{{ path('app_movie_index') }}">Retour</a>
+        <div class="d-flex gap-2">
+        <a class="btn btn-primary" href="{{ path('app_movie_index') }}">Retour</a>
 
-    <a class="btn btn-primary" href="{{ path('app_movie_edit', {'id': movie.id}) }}">Modifier</a>
+        <a class="btn btn-primary" href="{{ path('app_movie_edit', {'id': movie.id}) }}">Modifier</a>
 
-    {{ include('movie/_delete_form.html.twig') }}
+        {{ include('movie/_delete_form.html.twig') }}
+        </div>
     </div>
 {% endblock %}
