@@ -3,9 +3,10 @@
 {% block title %}Movie index{% endblock %}
 
 {% block body %}
-        <h1>Films à l'affiche</h1>
+    <div class="d-flex container gap-4 justify-content-between mb-3" style="max-width: 1600px" >
+        <h2>Films à l'affiche</h2>
         <a class="btn btn-primary" href="{{ path('app_movie_new') }}">Ajouter un film</a>
-
+    </div>
     <div class="container-fluid d-flex gap-4 justify-content-center flex-wrap" style="max-width: 1600px" >
         {% for movie in movies %}
         <div class="card" style="width: 18rem;">
@@ -26,8 +27,8 @@
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <a class="btn btn-primary" href="{{ path('app_movie_show', {'id': movie.id}) }}">show</a>
-                        <a class="btn btn-primary" href="{{ path('app_movie_edit', {'id': movie.id}) }}">edit</a>
+                        <a class="btn btn-primary" href="{{ path('app_movie_show', {'id': movie.id}) }}">Afficher</a>
+                        <a class="btn btn-primary" href="{{ path('app_movie_edit', {'id': movie.id}) }}">Modifier</a>
                     </li>
                 </ul>
             </div>
