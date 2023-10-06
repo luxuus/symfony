@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,6 +30,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?\DateTimeImmutable $birthdate = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $lasttime = null;
 
     public function getId(): ?int
     {
@@ -112,4 +116,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getAge(): int
+    {
+        $age = $this->birthdate->diff(new \DateTime('now'));
+        return $age->format('%y');
+    }
+
+    public function getLasttime(): ?\DateTimeImmutable
+    {
+        return $this->lasttime;
+    }
+
+    public function setLasttime(?\DateTimeImmutable $lasttime): static
+    {
+        $this->lasttime = $lasttime;
+
+        return $this;
+    }
+
+
+
+
 }

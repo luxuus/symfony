@@ -1,16 +1,21 @@
 {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <img class="navbar-brand m-lg-2" src="{{ asset('build/images/allocine.png') }}" alt="allocine logo" width="150"/>
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_movie_index') }}">Accueil</a>
-            </li>
-            <li class="nav-item">
-                 <a class="nav-link" href="{{ path('categories') }}">Categories</a>
-            </li>
-            <li class="nav-item">
-                 <a class="nav-link" href="{{ path('rechercher') }}">Rechercher</a>
-            </li>
-        </ul>
+    <nav class="navbar navbar-light bg-light mb-4">
+
+        <div class="d-flex gap-lg-4 justify-content-center align-items-center">
+            <a class="btn btn-outline-light" href="{{path('app_movie_index') }}">
+                <img class="navbar-brand m-lg-2" src="{{ asset('build/images/allocine.png') }}" alt="allocine logo" width="150"/>
+            </a>
+        </div>
+
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Rechercher" aria-label="Search">
+            {%if is_granted('ROLE_USER') %}
+                <a class="btn btn-danger" href="{{path('app_logout') }}">Déconnexion</a>
+            {% else %}
+                <a class="btn btn-outline-primary" href="{{path('app_login') }}">Connexion</a>
+            {% endif %}
+        </form>
+
+
     </nav>
 {% endblock %}

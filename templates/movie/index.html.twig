@@ -3,31 +3,47 @@
 {% block title %}Movie index{% endblock %}
 
 {% block body %}
-        <h1>Films à l'affiche</h1>
-        <a class="btn btn-primary" href="{{ path('app_movie_new') }}">Ajouter un film</a>
 
-    <div class="container-fluid d-flex gap-4 justify-content-center flex-wrap" style="max-width: 1600px" >
+    <div class="container-fluid align-items-center d-flex gap-4 mb-3" style="max-width: 1600px">
+        <h1>Films à l'affiche</h1>
+        {% if is_granted('ROLE_ADMIN')%}
+            <a class="btn btn-primary" href="{{ path('app_movie_new') }}">Ajouter un film</a>
+        {% endif %}
+    </div>
+
+    <div class="container-fluid d-flex gap-4 flex-wrap" style="max-width: 1600px" >
+
+        {% for user in users %}
+            <p>{{ user.username}}</p>
+        {% endfor %}
+
         {% for movie in movies %}
-        <div class="card" style="width: 18rem;">
+        <div class="card d-flex flex-grow-1" style="max-width: 295px ">
             <div class="card-body">
                 <img class="card-img-top" src="{{ movie.poster }}" alt="Card image cap" width="200">
                 <h4 class="card-title mt-2">{{ movie.title }}</h4>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{ movie.country }}</li>
-                    <li class="list-group-item">{{ movie.releasedAt ? movie.releasedAt|date('d-m-Y') : '' }}</li>
+                    <li class="list-group-item" style="height: 60px">{{ movie.country }}</li>
+                    <li class="list-group-item">{{ movie.releasedAt ? movie.releasedAt|format_datetime('short','none',locale='fr') }}</li>
                     <li class="list-group-item">
                         {% for genre in movie.genre %}
                             <span class="badge bg-secondary">{{ genre.name }}</span>
                         {% endfor %}
                     </li>
                     <li style="height:250px;" class="list-group-item ">{{ movie.plot }}</li>
-                    <li class="list-group-item">Prix : {{ movie.price }}€</li>
+                    <li class="list-group-item">{{ movie.rated }}</li>
                 </ul>
 
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <a class="btn btn-primary" href="{{ path('app_movie_show', {'id': movie.id}) }}">show</a>
-                        <a class="btn btn-primary" href="{{ path('app_movie_edit', {'id': movie.id}) }}">edit</a>
+                        {% if is_granted('MOVIE_ORDER',movie) %}
+                            <a class="btn btn-outline-primary" href="{{ path('app_movie_order', {'id': movie.id}) }}">Commander</a>
+                        {% endif %}
+                        <a class="btn btn-primary" href="{{ path('app_movie_show', {'id': movie.id}) }}">Afficher</a>
+                        {% if is_granted('ROLE_ADMIN')%}
+                            <a class="btn btn-outline-primary" href="{{ path('app_movie_edit', {'id': movie.id}) }}">Modifier</a>
+                        {% endif %}
+
                     </li>
                 </ul>
             </div>
